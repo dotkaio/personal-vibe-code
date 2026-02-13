@@ -14,7 +14,7 @@ export async function exportContainerCode(
   try {
     await fs.mkdir(tempDir, { recursive: true });
 
-    const copyCommand = `docker cp ${containerId}:/app/my-nextjs-app/. ${tempDir}/`;
+    const copyCommand = `podman cp ${containerId}:/app/my-nextjs-app/. ${tempDir}/`;
     await execAsync(copyCommand);
 
     const nodeModulesPath = path.join(tempDir, "node_modules");

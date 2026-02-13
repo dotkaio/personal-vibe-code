@@ -67,7 +67,7 @@ export const CreateProjectCard = ({
                 Start a new Next.js application
                 <br />
                 <span className="text-white/50">
-                  with Docker containerization
+                  with Podman containerization
                 </span>
               </span>
             </div>

@@ -11,7 +11,7 @@ export async function addDependency(
 ): Promise<string> {
   const devFlag = isDev ? "--dev" : "";
   const addCommand =
-    `docker exec -w ${BASE_PATH} ${containerId} bun add ${packageName} ${devFlag}`.trim();
+    `podman exec -w ${BASE_PATH} ${containerId} bun add ${packageName} ${devFlag}`.trim();
 
   const { stdout, stderr } = await execAsync(addCommand);
   return stdout || stderr;

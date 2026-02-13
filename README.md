@@ -26,7 +26,7 @@
 Features
 
     ✅ AI-powered project creation from natural language prompts
-    ✅ Containerized Next.js applications with Docker
+    ✅ Containerized Next.js applications with Podman
     ✅ Live preview with mobile and desktop views
     ✅ Full-featured Monaco code editor with file management
     ✅ Real-time chat assistant for development help
@@ -40,28 +40,26 @@ Roadmap
     🔄 Comprehensive test coverage
     🔄 Multi-framework support (beyond Next.js)
 
-
-
 Get an API Key from any OpenAI sdk compatible provider (e.g. OpenAI, Claude, Ollama, OpenRouter, etc.) and set it in the config.ts file.
 
-   The start.sh script will automatically copy over the file into the backend folder.
+The start.sh script will automatically copy over the file into the backend folder.
 
-   I highly recommend using Sonnet-4 from Anthropic as it is the best coding model available right now.
+I highly recommend using Sonnet-4 from Anthropic as it is the best coding model available right now.
 
- baseUrl: "https://openrouter.ai/api/v1",
+baseUrl: "https://openrouter.ai/api/v1",
 
- apiKey:
-   "sk-...",
+apiKey:
+"sk-...",
 
- model: "anthropic/claude-sonnet-4",
- temperature: 0.7,
+model: "anthropic/claude-sonnet-4",
+temperature: 0.7,
 
-Install docker (Docker Desktop is the easiest way to get started)
-Docker Desktop for Mac
-Docker Desktop for Windows
-Docker Engine for Linux
+Install Podman (Podman Desktop is the easiest way to get started)
+Podman Desktop for Mac
+Podman Desktop for Windows
+Podman for Linux
 
-   Make sure you have Docker running and the Docker CLI installed before proceeding.
+Make sure you have Podman running and the Podman CLI installed before proceeding.
 
 Run the start script to set up the environment
 
@@ -69,9 +67,9 @@ sh start.sh
 
 The application will start in development mode, and you can access it at http://localhost:3000.
 
-   The backend will run on port 4000, and the frontend will run on port 3000.
+The backend will run on port 4000, and the frontend will run on port 3000.
 
-   You can now start building your applications! 🥳
+You can now start building your applications! 🥳
 
 Motivation
 

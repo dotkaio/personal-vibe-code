@@ -42,7 +42,7 @@ export const TopNavigation = ({
           const data = await response.json();
           if (data.success) {
             const container = data.containers.find(
-              (c: any) => c.id === containerId
+              (c: any) => c.id === containerId,
             );
             if (container && container.url) {
               setContainerUrl(container.url);

@@ -44,7 +44,7 @@ const parseSpecialTags = (
   content: string,
   containerId?: string,
   messageId?: string,
-  executeOperations: boolean = true
+  executeOperations: boolean = true,
 ) => {
   const components: React.ReactNode[] = [];
   let currentIndex = 0;
@@ -88,7 +88,7 @@ const parseSpecialTags = (
     executed.add(messageId);
     localStorage.setItem(
       getExecutedKey(containerId),
-      JSON.stringify([...executed])
+      JSON.stringify([...executed]),
     );
   };
 
@@ -104,7 +104,7 @@ const parseSpecialTags = (
           console.log(
             `[FILE OP] Writing file: ${match[1]} (${
               match[2].trim().length
-            } chars)`
+            } chars)`,
           );
           response = await fetch(
             `http://localhost:4000/containers/${containerId}/files`,
@@ -115,10 +115,10 @@ const parseSpecialTags = (
                 path: match[1],
                 content: match[2].trim(),
               }),
-            }
+            },
           );
           console.log(
-            `[FILE OP] Write file ${match[1]} - Status: ${response.status}`
+            `[FILE OP] Write file ${match[1]} - Status: ${response.status}`,
           );
           break;
         case "rename":
@@ -129,10 +129,10 @@ const parseSpecialTags = (
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ oldPath: match[1], newPath: match[2] }),
-            }
+            },
           );
           console.log(
-            `[FILE OP] Rename ${match[1]} → ${match[2]} - Status: ${response.status}`
+            `[FILE OP] Rename ${match[1]} → ${match[2]} - Status: ${response.status}`,
           );
           break;
         case "delete":
@@ -143,10 +143,10 @@ const parseSpecialTags = (
               method: "DELETE",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ path: match[1] }),
-            }
+            },
           );
           console.log(
-            `[FILE OP] Delete ${match[1]} - Status: ${response.status}`
+            `[FILE OP] Delete ${match[1]} - Status: ${response.status}`,
           );
           break;
         case "dependency":
@@ -155,7 +155,7 @@ const parseSpecialTags = (
           console.log(
             `[FILE OP] Installing dependency: ${packageName} ${
               version ? `@${version}` : ""
-            }`
+            }`,
           );
           response = await fetch(
             `http://localhost:4000/containers/${containerId}/dependencies`,
@@ -163,10 +163,10 @@ const parseSpecialTags = (
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ packageName, isDev: false }),
-            }
+            },
           );
           console.log(
-            `[FILE OP] Install ${packageName} - Status: ${response.status}`
+            `[FILE OP] Install ${packageName} - Status: ${response.status}`,
           );
           break;
       }
@@ -226,7 +226,7 @@ const parseSpecialTags = (
                   {line}
                 </p>
               ))}
-          </div>
+          </div>,
         );
       }
     }
@@ -259,7 +259,7 @@ const parseSpecialTags = (
                 {line}
               </p>
             ))}
-        </div>
+        </div>,
       );
     }
   }
@@ -270,7 +270,7 @@ const parseSpecialTags = (
 const renderSpecialComponent = (
   type: string,
   match: RegExpExecArray,
-  index: number
+  index: number,
 ): React.ReactNode => {
   switch (type) {
     case "write":
@@ -552,7 +552,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
 
   const hasSpecialTags =
     /<dec-|<response_format|<user_message|<ai_message|<examples|<guidelines|<console-logs|<useful-context|<current-route|<instructions-reminder|<last-diff/.test(
-      message.content
+      message.content,
     );
 
   useEffect(() => {
@@ -651,7 +651,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                     message.content,
                     containerId,
                     message.id,
-                    false
+                    false,
                   ) || (
                     <div className="prose prose-sm prose-invert max-w-none [&_h2]:text-white [&_h3]:text-white [&_h4]:text-white [&_strong]:text-white">
                       {formatMessageContent(message.content)}

@@ -47,7 +47,7 @@ export const WorkspaceDashboard = ({
   const [isExporting, setIsExporting] = useState<boolean>(false);
   const [hasProcessedPrompt, setHasProcessedPrompt] = useState<boolean>(false);
   const [streamingMessageId, setStreamingMessageId] = useState<string | null>(
-    null
+    null,
   );
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [pendingFiles, setPendingFiles] = useState<File[]>([]);
@@ -72,7 +72,7 @@ export const WorkspaceDashboard = ({
           const data = await response.json();
           if (data.success) {
             const container = data.containers.find(
-              (c: any) => c.id === containerId
+              (c: any) => c.id === containerId,
             );
             if (container && container.url) {
               setContainerUrl(container.url);
@@ -105,7 +105,7 @@ export const WorkspaceDashboard = ({
               try {
                 const response = await sendChatMessage(
                   containerId,
-                  promptFromUrl
+                  promptFromUrl,
                 );
                 if (response.success) {
                   setMessages([
@@ -130,7 +130,7 @@ export const WorkspaceDashboard = ({
               window.history.replaceState(
                 {},
                 document.title,
-                window.location.pathname
+                window.location.pathname,
               );
             }
           } else {
@@ -165,7 +165,7 @@ export const WorkspaceDashboard = ({
 
     const existingTotalSize = existingFiles.reduce(
       (sum, file) => sum + file.size,
-      0
+      0,
     );
     let newTotalSize = existingTotalSize;
     const validFiles: File[] = [];
@@ -191,7 +191,7 @@ export const WorkspaceDashboard = ({
 
       if (newTotalSize + file.size > maxTotalSize) {
         toast.error(
-          `Cannot add ${file.name}: would exceed total size limit (max 20MB)`
+          `Cannot add ${file.name}: would exceed total size limit (max 20MB)`,
         );
         continue;
       }
@@ -235,7 +235,7 @@ export const WorkspaceDashboard = ({
               mimeType: file.type,
               size: file.size,
             };
-          })
+          }),
         );
       } catch (error) {
         console.error("Error processing files:", error);
@@ -257,7 +257,7 @@ export const WorkspaceDashboard = ({
           setMessages((prev) => {
             const newMessages = [...prev];
             const existingIndex = newMessages.findIndex(
-              (msg) => msg.id === data.data.id
+              (msg) => msg.id === data.data.id,
             );
 
             if (existingIndex >= 0) {
@@ -279,7 +279,7 @@ export const WorkspaceDashboard = ({
 
         if (error.includes("413") || error.includes("Payload Too Large")) {
           toast.error(
-            "Files too large. Please reduce file sizes and try again."
+            "Files too large. Please reduce file sizes and try again.",
           );
         } else {
           toast.error("Connection error. Please try again.");
@@ -296,14 +296,14 @@ export const WorkspaceDashboard = ({
       () => {
         setIsLoading(false);
         setStreamingMessageId(null);
-      }
+      },
     );
 
     streamCancelRef.current = cancel;
   };
 
   const handleTextareaKeyDown = (
-    e: React.KeyboardEvent<HTMLTextAreaElement>
+    e: React.KeyboardEvent<HTMLTextAreaElement>,
   ): void => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -351,7 +351,7 @@ export const WorkspaceDashboard = ({
         toast.success(`${validFiles.length} file(s) ready to send!`);
       } else {
         toast.success(
-          `${validFiles.length} of ${droppedFiles.length} files added`
+          `${validFiles.length} of ${droppedFiles.length} files added`,
         );
       }
     }
@@ -381,7 +381,7 @@ export const WorkspaceDashboard = ({
 
     try {
       const response = await fetch(
-        `http://localhost:4000/containers/${containerId}/export`
+        `http://localhost:4000/containers/${containerId}/export`,
       );
 
       if (!response.ok) {
@@ -447,7 +447,7 @@ export const WorkspaceDashboard = ({
         return (
           <p key={index} className="mb-2">
             {parts.map((part: string, i: number) =>
-              i % 2 === 1 ? <strong key={i}>{part}</strong> : part
+              i % 2 === 1 ? <strong key={i}>{part}</strong> : part,
             )}
           </p>
         );
@@ -466,7 +466,7 @@ export const WorkspaceDashboard = ({
                 </code>
               ) : (
                 part
-              )
+              ),
             )}
           </p>
         );

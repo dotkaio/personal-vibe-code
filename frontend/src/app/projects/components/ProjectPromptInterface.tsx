@@ -19,7 +19,7 @@ export const ProjectPromptInterface = ({
   const [isCreatingFromPrompt, setIsCreatingFromPrompt] = useState(false);
   const [showCommunityDropdown, setShowCommunityDropdown] = useState(false);
   const [showModelDropdown, setShowModelDropdown] = useState(false);
-  const [selectedModel, setSelectedModel] = useState("Claude Sonnet 4");
+  const [selectedModel, setSelectedModel] = useState("Claude Opus 4.6");
   const router = useRouter();
 
   const handlePromptSubmit = async () => {
@@ -42,8 +42,8 @@ export const ProjectPromptInterface = ({
 
       router.push(
         `/projects/${containerId}?prompt=${encodeURIComponent(
-          promptInput.trim()
-        )}`
+          promptInput.trim(),
+        )}`,
       );
     } catch (error) {
       console.error("Failed to create project from prompt:", error);
@@ -67,7 +67,7 @@ export const ProjectPromptInterface = ({
     "Django",
   ];
 
-  const modelOptions = ["Claude Sonnet 4"];
+  const modelOptions = ["Claude Opus 4.6"];
 
   const handleCommunitySelect = (option: string) => {
     onTemplateChange(option);
@@ -115,7 +115,7 @@ export const ProjectPromptInterface = ({
                 <textarea
                   id="chat-main-textarea"
                   name="content"
-                  placeholder="Ask December to build..."
+                  placeholder="Ask me what to build..."
                   spellCheck="false"
                   value={promptInput}
                   onChange={(e) => setPromptInput(e.target.value)}

@@ -1,6 +1,6 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
-import * as dockerService from "../services/docker";
+import * as podmanService from "../services/podman";
 import * as exportService from "../services/export";
 import * as fileService from "../services/file";
 import * as packageService from "../services/package";
@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const containers = await dockerService.listProjectContainers();
+    const containers = await podmanService.listProjectContainers();
 
     res.json({
       success: true,
@@ -27,18 +27,18 @@ router.post("/create", async (req, res) => {
   const containerId = uuidv4();
 
   try {
-    const imageName = await dockerService.buildImage(containerId);
-    const { container, port } = await dockerService.createContainer(
+    const imageName = await podmanService.buildImage(containerId);
+    const { containerId: newContainerId, port } = await podmanService.createContainer(
       imageName,
       containerId
     );
 
     res.json({
       success: true,
-      containerId: container.id,
+      containerId: newContainerId,
       container: {
         id: containerId,
-        containerId: container.id,
+        containerId: newContainerId,
         status: "running",
         port: port,
         url: `http://localhost:${port}`,
@@ -47,7 +47,7 @@ router.post("/create", async (req, res) => {
       },
     });
   } catch (error) {
-    await dockerService.cleanupImage(containerId);
+    await podmanService.cleanupImage(containerId);
 
     res.status(500).json({
       success: false,
@@ -60,7 +60,7 @@ router.post("/:containerId/start", async (req, res) => {
   const { containerId } = req.params;
 
   try {
-    const { port } = await dockerService.startContainer(containerId);
+    const { port } = await podmanService.startContainer(containerId);
 
     res.json({
       success: true,
@@ -82,7 +82,7 @@ router.post("/:containerId/stop", async (req, res) => {
   const { containerId } = req.params;
 
   try {
-    await dockerService.stopContainer(containerId);
+    await podmanService.stopContainer(containerId);
 
     res.json({
       success: true,
@@ -102,7 +102,7 @@ router.delete("/:containerId", async (req, res) => {
   const { containerId } = req.params;
 
   try {
-    await dockerService.deleteContainer(containerId);
+    await podmanService.deleteContainer(containerId);
 
     res.json({
       success: true,
@@ -123,7 +123,6 @@ router.get("/:containerId/files", async (req, res) => {
 
   try {
     const files = await fileService.listFiles(
-      dockerService.docker,
       containerId,
       containerPath as string
     );
@@ -146,7 +145,6 @@ router.get("/:containerId/file-tree", async (req, res) => {
 
   try {
     const fileTree = await fileService.getFileTree(
-      dockerService.docker,
       containerId
     );
 
@@ -167,7 +165,6 @@ router.get("/:containerId/file-content-tree", async (req, res) => {
 
   try {
     const fileContentTree = await fileService.getFileContentTree(
-      dockerService.docker,
       containerId
     );
 
@@ -197,7 +194,6 @@ router.get("/:containerId/file", async (req, res) => {
 
   try {
     const content = await fileService.readFile(
-      dockerService.docker,
       containerId,
       filePath as string
     );

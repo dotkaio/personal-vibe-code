@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import { config } from "../../config";
 import prompt from "../utils/prompt.txt";
-import * as dockerService from "./docker";
+import * as podmanService from "./podman";
 import * as fileService from "./file";
 
 const openai = new OpenAI({
@@ -123,7 +123,6 @@ export async function sendMessage(
   session.messages.push(userMsg);
 
   const fileContentTree = await fileService.getFileContentTree(
-    dockerService.docker,
     containerId
   );
 
@@ -191,7 +190,6 @@ export async function* sendMessageStream(
   yield { type: "user", data: userMsg };
 
   const fileContentTree = await fileService.getFileContentTree(
-    dockerService.docker,
     containerId
   );
 

@@ -112,7 +112,7 @@ export const ProjectsGrid = () => {
       <div className="flex flex-col items-center justify-center h-64 gap-6">
         <div className="bg-red-500/10 backdrop-blur-md rounded-2xl border border-red-500/20 p-8 text-center shadow-xl max-w-md">
           <div className="text-red-400 text-xl font-semibold mb-2">
-            Docker likely not running
+            Podman likely not running
           </div>
           <div className="text-white/60 mb-4">{error}</div>
           <button
